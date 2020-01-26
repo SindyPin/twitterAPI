@@ -1,32 +1,34 @@
+# PASSO 1: Importar as biblitoecas necessárias
+import os
 import redis
 import json
 
-# PASSO 1: Importar a classe "Python object" localizada no módulo "tweet"
+# PASSO 2: Importar a classe "Python object" localizada no módulo "tweet"
 from tweet import Tweet
 
-# PASSO 2: Criar uma classe contendo as funções necessárias para guardar os tweets captados
+# PASSO 3: Criar uma classe contendo as funções necessárias para guardar os tweets captados
 class TweetStore:
 
-    # PASSO 3: Configurar Redis
+    # PASSO 4: Configurar Redis
     redis_host = "localhost"
     redis_port = 6379
     redis_password = ""
 
-    # PASSO 4: Configurar a quantidade de Tweets armazenados 
+    # PASSO 5: Configurar a quantidade de Tweets armazenados 
     # Nota 1: cada 100 tweets, eliminar a quantidade necessária de tweets para que o db sempre fique com pelo menos 20
     redis_key = 'tweets'
     num_tweets = 20
     trim_threshold = 100
 
-    # PASSO 5: Criar a função __init__ para inicializar conexão com o db 
+    # PASSO 6: Criar a função __init__ para inicializar conexão com o db dia Redis
     # Nota 2: "trim_count" elimina os tweets antigos do db para deixar entrar novos tweets
     def __init__(self):
-        self.db = r = redis.Redis(host=self.redis_host,
-                                  port=self.redis_port,
-                                  password=self.redis_password)
+    	self.db = r = redis.Redis.from_url(os.getenv('REDIS_URL', 
+    		"redis://h:pb857b6aec997348dae5b563101c5bd848c7035a575e659310d850cc090ef2394@ec2-3-82-83-129.compute-1.amazonaws.com:23679"))
+        #self.db = r = redis.Redis(host=self.redis_host, port=self.redis_port, password=self.redis_password)
         self.trim_count = 0
     
-    # PASSO 6: Criar a função "tweets" que servirá para conectar o db ao servidor via web app
+    # PASSO 7: Criar a função "tweets" que servirá para conectar o db ao servidor via web app
     # Nota 3: Na web app serão apresentados somente os últimos 15 tweets (dado pelo comando "limit")
     def tweets(self, limit=15):
         tweets = []
@@ -36,7 +38,7 @@ class TweetStore:
             tweets.append(Tweet(tweet_obj))
         return tweets
 
-    # PASSO 7: Criar a função "push" para puxar os tweets desde https://twitter.com
+    # PASSO 8: Criar a função "push" para puxar os tweets desde https://twitter.com
     # Nota 4: "data" corresponde aos tweets que serão puxados 
     # (é um "tweet_object" que foi criado no arquivo de filtragem de tweets) 
     # Nota 5: "lpush" (left push) é o comando que puxará os tweets ao começo da API
