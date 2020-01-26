@@ -23,9 +23,9 @@ class TweetStore:
     # PASSO 6: Criar a função __init__ para inicializar conexão com o db dia Redis
     # Nota 2: "trim_count" elimina os tweets antigos do db para deixar entrar novos tweets
     def __init__(self):
+    	self.db = r = redis.Redis(host=self.redis_host, port=self.redis_port, password=self.redis_password)
     	self.trim_count = 0
     	self.db = r = redis.Redis.from_url(os.getenv('REDIS_URL', "redis://h:pb857b6aec997348dae5b563101c5bd848c7035a575e659310d850cc090ef2394@ec2-3-82-83-129.compute-1.amazonaws.com:23679"))
-        # self.db = r = redis.Redis(host=self.redis_host, port=self.redis_port, password=self.redis_password)
     
     # PASSO 7: Criar a função "tweets" que servirá para conectar o db ao servidor via web app
     # Nota 3: Na web app serão apresentados somente os últimos 15 tweets (dado pelo comando "limit")
