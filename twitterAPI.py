@@ -3,10 +3,10 @@ import tweepy
 import datetime
 import json
 import time
-import requests
 
-#from rq import Queue
-#from worker import conn
+import requests
+from rq import Queue
+from worker import conn
 
 # PASSO 2: Importar a biblioteca que irá analizar polaridade, sentimento e subjetividade dos tweets
 from textblob import TextBlob
