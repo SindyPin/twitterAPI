@@ -3,13 +3,13 @@ import os
 import redis
 import json
 
-#from rq import Queue
-#from worker import conn
+from rq import Queue
+from worker import conn
 from tweet import Tweet
 from twitterAPI import StreamListener
 
 # PASSO 2: Criar variável para envio dos dados coletados a Reddis
-#q = Queue(connection=conn)
+q = Queue(connection=conn)
 
 # PASSO 3: Criar uma classe contendo as funções necessárias para guardar os tweets captados
 class TweetStore:

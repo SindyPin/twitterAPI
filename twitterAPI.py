@@ -3,9 +3,10 @@ import tweepy
 import datetime
 import json
 import time
+import requests
 
-from rq import Queue
-from worker import conn
+#from rq import Queue
+#from worker import conn
 
 # PASSO 2: Importar a biblioteca que irá analizar polaridade, sentimento e subjetividade dos tweets
 from textblob import TextBlob
@@ -23,7 +24,7 @@ api = tweepy.API(auth)
 store = TweetStore()
 
 
-q = Queue(connection=conn)
+#q = Queue(connection=conn)
 
 # PASSO 5: Criar a classe Listener para as análises e filtragens necessárias
 class StreamListener(tweepy.StreamListener):
