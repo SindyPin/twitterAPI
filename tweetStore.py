@@ -4,14 +4,13 @@ import redis
 import json
 
 from rq import Queue
-from worker import conn
-from tweet import Tweet
-from twitterAPI import StreamListener
+# from worker import conn
+# from tweet import Tweet
+# from twitterAPI import StreamListener
 
 # PASSO 2: Criar variável para envio dos dados coletados a Reddis
-q = Queue(connection=conn)
-
-result = q.enqueue(StreamListener, 'https://twitter-api-final.herokuapp.com')
+# q = Queue(connection=conn)
+# result = q.enqueue(StreamListener, 'https://twitter-api-final.herokuapp.com')
 
 # PASSO 3: Criar uma classe contendo as funções necessárias para guardar os tweets captados
 class TweetStore:
