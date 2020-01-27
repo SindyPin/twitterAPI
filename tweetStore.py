@@ -1,10 +1,15 @@
-# PASSO 1: Importar as biblitoecas necessárias
+# PASSO 1: Importar as biblitoecas e as funções necessárias
 import os
 import redis
 import json
 
-# PASSO 2: Importar a classe "Python object" localizada no módulo "tweet"
+#from rq import Queue
+#from worker import conn
 from tweet import Tweet
+from twitterAPI import StreamListener
+
+# PASSO 2: Criar variável para envio dos dados coletados a Reddis
+#q = Queue(connection=conn)
 
 # PASSO 3: Criar uma classe contendo as funções necessárias para guardar os tweets captados
 class TweetStore:
@@ -20,13 +25,13 @@ class TweetStore:
     num_tweets = 20
     trim_threshold = 100
 
-    # PASSO 6: Criar a função __init__ para inicializar conexão com o db dia Redis
+    # PASSO 6: Criar a função __init__ para inicializar conexão com o db via Redis
     # Nota 2: "trim_count" elimina os tweets antigos do db para deixar entrar novos tweets
     def __init__(self):
     	#self.db = r = redis.Redis(host=self.redis_host, port=self.redis_port, password=self.redis_password)
     	self.trim_count = 0
-    	self.db = r = redis.Redis.from_url(os.getenv('REDIS_URL', "redis://h:pb857b6aec997348dae5b563101c5bd848c7035a575e659310d850cc090ef2394@ec2-3-82-83-129.compute-1.amazonaws.com:23679"))
-    
+    	self.db = r = redis.Redis.from_url(os.getenv('REDIS_URL', 'redis://h:pb857b6aec997348dae5b563101c5bd848c7035a575e659310d850cc090ef2394@ec2-3-82-83-129.compute-1.amazonaws.com:23679'))
+    	self.result = q.enqueue(StreamListener, 'https://twitter-api-final.herokuapp.com')
     # PASSO 7: Criar a função "tweets" que servirá para conectar o db ao servidor via web app
     # Nota 3: Na web app serão apresentados somente os últimos 15 tweets (dado pelo comando "limit")
     def tweets(self, limit=15):
