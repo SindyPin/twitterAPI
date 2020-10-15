@@ -1,5 +1,5 @@
 # Creating a Twitter Stream API 
-# Python Language / Redis db / Flask Framework / Heroku Cloud Platform
+# Python Leanguage / Redis db / Flask Framework / Heroku Cloud Platform
 
 API Useful:
 - To filter tweets by author, hashtag, language, topic, trend topics, location, etc.;
